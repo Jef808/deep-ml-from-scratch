@@ -168,8 +168,8 @@ TEST_CASE("Backward propagation updates weights and biases correctly in simple c
 
   Eigen::MatrixXd dInput = layer.backward(dOutput);
 
-  Eigen::MatrixXd actualDW = layer.weightsGradients();
-  Eigen::MatrixXd actualDB = layer.biasesGradients();
+  Eigen::MatrixXd actualDW = layer.weights_grad();
+  Eigen::MatrixXd actualDB = layer.biases_grad();
 
   SECTION("Derivative of weights and biases are correct") {
     REQUIRE(dW.isApprox(expectedDW, 1e-9));
@@ -196,8 +196,8 @@ TEST_CASE("Backward propagation updates weights and biases correctly in simple c
   expectedBias << 0.05,
                   -0.05;
 
-  layer.updateWeights(-0.1 * layer.weightsGradients());
-  layer.updateBiases(-0.1 * layer.biasesGradients());
+  layer.updateWeights(-0.1 * layer.weights_grad());
+  layer.updateBiases(-0.1 * layer.biases_grad());
 
   SECTION("Weights and biases are updated correctly") {
     REQUIRE(layer.weights().isApprox(expectedWeights, 1e-9));

@@ -6,9 +6,9 @@ namespace dmlfs {
 
 Layer::Layer(int inputSize, int outputSize, Initializer::Type initializerType, Activation::Type activationType):
     m_weights{Matrix::Zero(outputSize, inputSize)},
-    m_weightsGradients{Matrix::Zero(outputSize, inputSize)},
+    m_weights_grad{Matrix::Zero(outputSize, inputSize)},
     m_biases{Matrix::Zero(outputSize, 1)},
-    m_biasesGradients{Matrix::Zero(outputSize, 1)},
+    m_biases_grad{Matrix::Zero(outputSize, 1)},
     m_activation{nullptr}
 {
   Initializer::apply(initializerType, m_weights, m_biases);
@@ -17,9 +17,9 @@ Layer::Layer(int inputSize, int outputSize, Initializer::Type initializerType, A
 
 Layer::Layer(const Matrix& weights, const Matrix& biases, Activation::Type activationType):
     m_weights{weights},
-    m_weightsGradients{Matrix::Zero(weights.rows(), weights.cols())},
+    m_weights_grad{Matrix::Zero(weights.rows(), weights.cols())},
     m_biases{biases},
-    m_biasesGradients{Matrix::Zero(biases.rows(), biases.cols())},
+    m_biases_grad{Matrix::Zero(biases.rows(), biases.cols())},
     m_activation{nullptr}
 {
   Activation::set(activationType, m_activation);
@@ -41,8 +41,8 @@ Layer::Matrix Layer::backward(const Matrix& dOutput) {
   Matrix dActivation = m_activation->derivative(m_output);
 
   Matrix dZ = dOutput.array() * dActivation.array();
-  m_weightsGradients = dZ * m_input.transpose();
-  m_biasesGradients = dZ.rowwise().sum();
+  m_weights_grad = dZ * m_input.transpose();
+  m_biases_grad = dZ.rowwise().sum();
 
   return m_weights.transpose() * dZ;
 }

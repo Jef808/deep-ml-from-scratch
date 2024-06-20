@@ -79,4 +79,29 @@ Type& Name() { \
   return m_##Name; \
 }
 
+/**
+ * @brief Macro to define a default constructor within a class.
+ *
+ * This macro simplifies the definition of a default constructor for a class by
+ * automatically generating a public default constructor that is defaulted. Using this
+ * macro within a class definition enhances readability and reduces boilerplate code,
+ * especially in cases where classes are intended to be simple or are required to have
+ * a default constructor for compliance with certain C++ standards or practices.
+ *
+ * Usage:
+ * Inside a class definition, simply use `DEFAULT_CTOR(ClassName);` to declare and define a
+ * default constructor. Ensure that this macro is placed in the public section of the
+ * class to adhere to C++ best practices regarding constructor accessibility.
+ *
+ * Example:
+ * ```cpp
+ * class MyClass {
+ * public:
+ *   DEFINE_DEFAULT_CTOR(MyClass);
+ * };
+ * ```
+ */
+#define DEFINE_DEFAULT_CTOR(ClassName) \
+  ClassName() = default;
+
 #endif /* COMMONMACROS_H */

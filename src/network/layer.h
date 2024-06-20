@@ -52,7 +52,7 @@ public:
    *
    * @see CommonMacros.h
    */
-  DEFINE_CONST_GETTER(Matrix, weightsGradients);
+  DEFINE_CONST_GETTER(Matrix, weights_grad);
 
   /**
    * @brief Getter for the biases matrix
@@ -66,22 +66,22 @@ public:
    *
    * @see CommonMacros.h
    */
-  DEFINE_CONST_GETTER(Matrix, biasesGradients);
+  DEFINE_CONST_GETTER(Matrix, biases_grad);
 
   /**
    * @brief Forward propagation
    * @param input Input to the layer
    * @return Output of the layer
    */
-  Matrix forward(const Eigen::MatrixXd& input);
+  virtual Matrix forward(const Matrix& input);
 
   /**
    * @brief Backward propagation
-   * @param dOutput Derivative of the output
+   * @param grad_output Derivative of the output
    * @param learningRate Learning rate
    * @return Derivative of the input
    */
-  Matrix backward(const Matrix& dOutput);
+  virtual Matrix backward(const Matrix& grad_output);
 
   /**
    * @brief Update weights after forward and backward propagation
@@ -104,7 +104,7 @@ private:
   /**
    * @brief Weights gradients
    */
-  Matrix m_weightsGradients;
+  Matrix m_weights_grad;
 
   /**
    * @brief Biases
@@ -114,7 +114,7 @@ private:
   /**
    * @brief Biases gradients
    */
-  Matrix m_biasesGradients;
+  Matrix m_biases_grad;
 
   /**
    * @brief The input to the layer for use in backpropagation

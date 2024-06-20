@@ -9,11 +9,11 @@ SGD::SGD(double learningRate):
 
 void SGD::update(Network& network) {
   for (auto& layer : network.layers()) {
-    Network::Matrix weightsGradient = layer->weightsGradients();
-    Network::Matrix biasesGradient = layer->biasesGradients();
+    Network::Matrix weights_grad = layer->weights_grad();
+    Network::Matrix biases_grad = layer->biases_grad();
 
-    layer->updateWeights(-m_learningRate * weightsGradient);
-    layer->updateBiases(-m_learningRate * biasesGradient);
+    layer->updateWeights(-m_learningRate * weights_grad);
+    layer->updateBiases(-m_learningRate * biases_grad);
   }
 }
 

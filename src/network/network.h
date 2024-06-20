@@ -16,7 +16,7 @@ public:
   /**
    * @brief Default constructor
    */
-  Network() = default;
+  DEFINE_DEFAULT_CTOR(Network);
 
   /**
    * @brief Add a layer to the network
